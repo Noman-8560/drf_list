@@ -3,11 +3,11 @@ from .models import Student
 from django.contrib import messages
 from django.db.models import Q
 
-
 def index(request):
-    students = Student.objects.all()
+    students = None  # Initialize students as None
     search_query = ""
-    if request.method == "POST": 
+    
+    if request.method == "POST":
         if "create" in request.POST:
             name = request.POST.get("name")
             fname = request.POST.get("fname")
@@ -46,7 +46,9 @@ def index(request):
         
         elif "search" in request.POST:
             search_query = request.POST.get("query")
-            students = Student.objects.filter(Q(name__icontains=search_query) | Q(cnic__icontains=search_query))
+            if search_query:  # Check if search query is not empty
+                students = Student.objects.filter(Q(name__icontains=search_query) | Q(cnic__icontains=search_query))
+                # Only pass filtered data to the template if search query is provided
 
     context = {"students": students, "search_query": search_query}
     return render(request, "index.html", context=context)

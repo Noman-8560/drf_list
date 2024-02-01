@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Voter List</title>
     <link
       rel="stylesheet"
@@ -31,223 +31,98 @@
   </head>
   <body class="bg-light">
     <div class="container mt-5 p-5 rounded shadow bg-white">
-      <!-- {% if messages %}
-                {% for message in messages %}
-                    <div class="mb-3 alert alert-success text-center">
-                        {{message}}
-                    </div>
-                {% endfor %}
-            {% endif %} -->
-      {% if messages %}
-      <script>
-        setTimeout(function () {
-          document.querySelectorAll(".alert").forEach(function (alert) {
-            alert.style.display = "none";
-          });
-        }, 1000); // 1 second
-      </script>
-      {% for message in messages %}
-      <div class="mb-3 alert alert-success text-center">{{ message }}</div>
-      {% endfor %} {% endif %}
-
-      <div class="d-flex mb-3 justify-content-between align-items-center">
+      <!-- Add New Voter Button -->
+      <div class="mb-3">
         <a
-          href=""
+          href="#"
           data-bs-toggle="modal"
           data-bs-target="#addnewstudentModal"
-          class="btn btn-primary px-3 btn-sm"
-          >Add new Voter</a
+          class="btn btn-primary btn-sm"
+          >Add New Voter</a
         >
-        <div class="">
-          <form method="post" class="d-flex">
-            {% csrf_token %}
-            <input
-              type="search"
-              name="query"
-              class="form-control"
-              placeholder="Search by CNIC"
-              value="{{search_query}}"
-            />
-            <button class="btn btn-success btn-sm px-3 mx-2" name="search">
-              Search
-            </button>
-          </form>
-        </div>
       </div>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th scope="col">Serial No</th>
-            <th scope="col">Family No</th>
-            <th scope="col">Name</th>
-            <th scope="col">Father Name</th>
-            <th scope="col">CNIC</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for student in students %}
-          <tr>
-            <td>{{student.serial}}</td>
-            <td>{{student.fno}}</td>
-            <td>{{student.name}}</td>
-            <td>{{student.fname}}</td>
-            <td>{{student.cnic}}</td>
-            <td>
-              <a
-                href=""
-                data-bs-toggle="modal"
-                data-bs-target="#updatestudentModal_{{student.id}}"
-                class="btn btn-sm btn-success"
-                ><i class="fa-regular fa-pen-to-square"></i
-              ></a>
-              <a
-                href=""
-                data-bs-toggle="modal"
-                data-bs-target="#deletestudentModal_{{student.id}}"
-                class="btn btn-sm btn-danger"
-                ><i class="fa-solid fa-trash"></i
-              ></a>
-            </td>
-          </tr>
-          <!-- update student modal -->
-          <div
-            class="modal fade"
-            id="updatestudentModal_{{student.id}}"
-            tabindex="-1"
-            aria-labelledby="updatestudentModal_{{student.id}}Label"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog">
-              <form action="" method="post">
-                {% csrf_token %}
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1
-                      class="modal-title fs-5"
-                      id="updatestudentModal_{{student.id}}Label"
-                    >
-                      Add new student
-                    </h1>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    <input type="hidden" name="id" value="{{student.id}}" />
-                    <div class="">
-                      <label for="name">Name</label>
-                      <input
-                        required
-                        type="text"
-                        value="{{student.name}}"
-                        name="name"
-                        class="form-control"
-                      />
-                    </div>
-                    <div class="">
-                      <label for="name">Father Name</label>
-                      <input
-                        required
-                        type="text"
-                        value="{{student.fname}}"
-                        name="fname"
-                        class="form-control"
-                      />
-                    </div>
-                    <div class="">
-                      <label for="name">CNIC</label>
-                      <input
-                        required
-                        type="text"
-                        value="{{student.cnic}}"
-                        name="cnic"
-                        class="form-control"
-                      />
-                    </div>
-                    <div class="">
-                      <label for="name">Serial</label>
-                      <input
-                        required
-                        type="text"
-                        value="{{student.serial}}"
-                        name="serial"
-                        class="form-control"
-                      />
-                    </div>
-                    <div class="">
-                      <label for="name">Fno</label>
-                      <input
-                        required
-                        type="text"
-                        value="{{student.fno}}"
-                        name="fno"
-                        class="form-control"
-                      />
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                    >
-                      Cancel
-                    </button>
-                    <button type="submit" class="btn btn-primary" name="update">
-                      Update Voter
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
 
-          <!-- delete student modal -->
-          <div
-            class="modal fade"
-            id="deletestudentModal_{{student.id}}"
-            data-bs-backdrop="static"
-            data-bs-keyboard="false"
-            tabindex="-1"
-            aria-labelledby="deletestudentModal_{{student.id}}Label"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog">
-              <form action="" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="id" value="{{student.id}}" />
-                <div class="modal-content">
-                  <div class="modal-body">
-                    <p>Are you sure? you want to delete</p>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                    >
-                      Cancel
-                    </button>
-                    <button type="submit" class="btn btn-danger" name="delete">
-                      Delete Voter
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-          {% endfor %}
-        </tbody>
-      </table>
+      <!-- Search Form -->
+      <div class="mb-3">
+        <form method="post" class="d-flex">
+          {% csrf_token %}
+          <input
+            type="search"
+            name="query"
+            class="form-control"
+            placeholder="Search by CNIC or NAME"
+            value="{{search_query}}"
+          />
+          <button class="btn btn-success btn-sm px-3 mx-2" name="search">
+            Search
+          </button>
+        </form>
+      </div>
+
+      <!-- Alert Messages -->
+      {% if messages %}
+      <div class="mb-3 alert alert-success text-center" id="alertMessage">
+        {% for message in messages %} {{ message }} {% endfor %}
+      </div>
+      {% endif %}
+      <script>
+        // JavaScript to hide the alert after 1 second
+        setTimeout(function () {
+          var alertMessage = document.getElementById("alertMessage");
+          alertMessage.style.display = "none";
+        }, 1000);
+      </script>
+
+      <!-- Voter Table -->
+      {% if students %}
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Serial No</th>
+              <th scope="col">Family No</th>
+              <th scope="col">Name</th>
+              <th scope="col">Father Name</th>
+              <th scope="col">CNIC</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for student in students %}
+            <tr>
+              <td>{{student.serial}}</td>
+              <td>{{student.fno}}</td>
+              <td>{{student.name}}</td>
+              <td>{{student.fname}}</td>
+              <td>{{student.cnic}}</td>
+              <td>
+                <a
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#updatestudentModal_{{student.id}}"
+                  class="btn btn-sm btn-success"
+                  ><i class="fa-regular fa-pen-to-square"></i
+                ></a>
+                <a
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#deletestudentModal_{{student.id}}"
+                  class="btn btn-sm btn-danger"
+                  ><i class="fa-solid fa-trash"></i
+                ></a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %} {% if search_query %}
+      <p>Record not found.</p>
+      {% else %}
+      {% endif %} {% endif %}
     </div>
 
-    <!-- add new student modal -->
-
-    <!-- Modal -->
+    <!-- Add New Voter Modal -->
     <div
       class="modal fade"
       id="addnewstudentModal"
@@ -306,13 +181,153 @@
                 Cancel
               </button>
               <button type="submit" class="btn btn-primary" name="create">
-                Add new Voter
+                Add New Voter
               </button>
             </div>
           </div>
         </form>
       </div>
     </div>
+
+    <!-- Update Voter Modal -->
+    <!-- Example Modal Content for Update Voter Modal -->
+    <!-- You can replicate this structure for each student -->
+    <!-- Ensure to replace placeholder content with dynamic data -->
+    {% for student in students %}
+    <div
+      class="modal fade"
+      id="updatestudentModal_{{student.id}}"
+      tabindex="-1"
+      aria-labelledby="updatestudentModal_{{student.id}}Label"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <form action="" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="id" value="{{student.id}}" />
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1
+                class="modal-title fs-5"
+                id="updatestudentModal_{{student.id}}Label"
+              >
+                Update Voter
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="">
+                <label for="name">Name</label>
+                <input
+                  required
+                  type="text"
+                  value="{{student.name}}"
+                  name="name"
+                  class="form-control"
+                />
+              </div>
+              <div class="">
+                <label for="name">Father Name</label>
+                <input
+                  required
+                  type="text"
+                  value="{{student.fname}}"
+                  name="fname"
+                  class="form-control"
+                />
+              </div>
+              <div class="">
+                <label for="name">CNIC</label>
+                <input
+                  required
+                  type="text"
+                  value="{{student.cnic}}"
+                  name="cnic"
+                  class="form-control"
+                />
+              </div>
+              <div class="">
+                <label for="name">Serial</label>
+                <input
+                  required
+                  type="text"
+                  value="{{student.serial}}"
+                  name="serial"
+                  class="form-control"
+                />
+              </div>
+              <div class="">
+                <label for="name">Fno</label>
+                <input
+                  required
+                  type="text"
+                  value="{{student.fno}}"
+                  name="fno"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary" name="update">
+                Update Voter
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+
+    <!-- Delete Voter Modal -->
+    <!-- Example Modal Content for Delete Voter Modal -->
+    <!-- You can replicate this structure for each student -->
+    {% for student in students %}
+    <div
+      class="modal fade"
+      id="deletestudentModal_{{student.id}}"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="deletestudentModal_{{student.id}}Label"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <form action="" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="id" value="{{student.id}}" />
+          <div class="modal-content">
+            <div class="modal-body">
+              <p>Are you sure you want to delete {{student.name}}?</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-danger" name="delete">
+                Delete Voter
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
