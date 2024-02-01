@@ -30,9 +30,17 @@
     </style>
   </head>
   <body class="bg-light">
-    <div class="container mt-5 p-5 rounded shadow bg-white">
+    <div class="text-center">
+      <img
+        src="https://pbs.twimg.com/profile_banners/127483019/1660158448/1500x500"
+        alt="Banner Image"
+        class="img-fluid"
+        style="max-width: 100%"
+      />
+    </div>
+    <div class="container">
       <!-- Add New Voter Button -->
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <a
           href="#"
           data-bs-toggle="modal"
@@ -40,17 +48,17 @@
           class="btn btn-primary btn-sm"
           >Add New Voter</a
         >
-      </div>
+      </div> -->
 
       <!-- Search Form -->
-      <div class="mb-3">
+      <div class="mb-3 mt-3">
         <form method="post" class="d-flex">
           {% csrf_token %}
           <input
             type="search"
             name="query"
             class="form-control"
-            placeholder="Search by CNIC or NAME"
+            placeholder="Search by CNIC"
             value="{{search_query}}"
           />
           <button class="btn btn-success btn-sm px-3 mx-2" name="search">
@@ -84,7 +92,7 @@
               <th scope="col">Name</th>
               <th scope="col">Father Name</th>
               <th scope="col">CNIC</th>
-              <th scope="col">Actions</th>
+              <!-- <th scope="col">Actions</th> -->
             </tr>
           </thead>
           <tbody>
@@ -95,7 +103,7 @@
               <td>{{student.name}}</td>
               <td>{{student.fname}}</td>
               <td>{{student.cnic}}</td>
-              <td>
+              <!-- <td>
                 <a
                   href="#"
                   data-bs-toggle="modal"
@@ -110,16 +118,17 @@
                   class="btn btn-sm btn-danger"
                   ><i class="fa-solid fa-trash"></i
                 ></a>
-              </td>
+              </td> -->
             </tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
       {% else %} {% if search_query %}
-      <p>Record not found.</p>
-      {% else %}
-      {% endif %} {% endif %}
+      <div class="text-center">
+        <p>Record not found</p>
+      </div>
+      {% else %} {% endif %} {% endif %}
     </div>
 
     <!-- Add New Voter Modal -->
